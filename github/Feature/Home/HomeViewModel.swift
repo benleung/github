@@ -46,7 +46,9 @@ final class HomeViewModel: HomeViewModelOutput {
             repositoryItems
         ).map { didUpdateSearchText, items in
             if didUpdateSearchText == nil || didUpdateSearchText == "" {
-                return .empty
+                return .emptyInput
+            } else if items.isEmpty {
+                return .emptyResult
             } else {
                 return .repositoryList(items)
             }

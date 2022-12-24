@@ -12,7 +12,9 @@ final class HomeModel: ObservableObject {
         /// diplay a list of repositories
         case repositoryList([RepositoryItem])
         /// display a message to prompt user to input an text
-        case empty
+        case emptyInput
+        /// display a message to prompt user to input an text
+        case emptyResult
         /// display a message to prompt user that an error has occurred so that a list of repositories cannot be displayed correctly
         case error
     }
@@ -28,7 +30,7 @@ final class HomeModel: ObservableObject {
     
     @Published var displayMode: DisplayMode
     
-    init(displayMode: DisplayMode = .empty) {
+    init(displayMode: DisplayMode = .emptyInput) {
         self.displayMode = displayMode
     }
 }

@@ -18,9 +18,12 @@ struct HomeView: View {
         switch model.displayMode {
         case .repositoryList(let items):
             RepositoryItemListView(items)
-        case .empty:
-            // FIXME: empty view
+        case .emptyInput:
             Text("Please enter keywords to\nto query for a list of repositories")
+                .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
+        case .emptyResult:
+            Text("No repositories found. Please use a different keyword.")
                 .multilineTextAlignment(.center)
                 .foregroundColor(.gray)
         case .error:
