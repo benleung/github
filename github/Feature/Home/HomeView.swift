@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    let model: HomeModel
+    @ObservedObject var model: HomeModel
     
-    init(_ model: HomeModel) {
+    init(model: HomeModel, input: HomeViewModelInput) {
         self.model = model
     }
     
@@ -20,8 +20,9 @@ struct HomeView: View {
             RepositoryItemListView(items)
         case .empty:
             // FIXME: empty view
-//            Text("Please enter keywords \nto display a list of repositories")
-            fatalError("Not implemented yet")
+            Text("Please enter keywords to\nto query for a list of repositories")
+                .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
         case .error:
             // FIXME: error view
 //            Text("An error has occurred. Please make sure \nyou're connected to the Internet")

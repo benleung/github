@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct HomeModel {
+final class HomeModel: ObservableObject {
     enum DisplayMode {
         /// diplay a list of repositories
         case repositoryList([RepositoryItem])
@@ -26,5 +26,9 @@ struct HomeModel {
         let language: String
     }
     
-    let displayMode: DisplayMode
+    @Published var displayMode: DisplayMode
+    
+    init(displayMode: DisplayMode = .empty) {
+        self.displayMode = displayMode
+    }
 }

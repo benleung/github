@@ -12,6 +12,7 @@ import UIKit
 /// Input from ViewController to ViewModel
 struct HomeViewModelInput {
     var didUpdateSearchText = PassthroughSubject<String?, Never>()
+    var didViewLoad = PassthroughSubject<Void, Never>()
     // TODO: handle tap event
 //    var didTapRepositoryItem = PassthroughSubject<Void, Never>()
 }
@@ -21,22 +22,13 @@ struct HomeViewModelInput {
 protocol HomeViewModelOutput {
     // TODO: handle tap event
 //    var transitToRepositoryDetailView: AnyPublisher<Void, Never> { get }
-    var displayMode: AnyPublisher<HomeModel.DisplayMode, Never> { get }
+    var model: HomeModel { get }
 }
 
 final class HomeViewModel: HomeViewModelOutput {
     // MARK: output
     
-    lazy var displayMode: AnyPublisher<HomeModel.DisplayMode, Never> = {
-        Publishers.Merge(Just(nil), input.didUpdateSearchText).map { didUpdateSearchText in
-            if didUpdateSearchText == nil {
-                return .empty
-            } else {
-                // FIXME: to be implemented: logic to display result from data
-                return .repositoryList([])
-            }
-        }.eraseToAnyPublisher()
-    }()
+    var model: HomeModel
     
     // MARK: private properties
 
@@ -45,11 +37,53 @@ final class HomeViewModel: HomeViewModelOutput {
     
     private let getRepositoriesUseCase: GetRepositoriesUseCase
     
+    // results from getRepositoriesUseCase
+    private var repositoryItems = PassthroughSubject<[HomeModel.RepositoryItem], Never>()
+
+    private lazy var displayMode: AnyPublisher<HomeModel.DisplayMode, Never> = {
+        Publishers.CombineLatest(
+            input.didUpdateSearchText,
+            repositoryItems
+        ).map { didUpdateSearchText, items in
+            if didUpdateSearchText == nil || didUpdateSearchText == "" {
+                return .empty
+            } else {
+                return .repositoryList(items)
+            }
+        }.eraseToAnyPublisher()
+    }()
+    
     init(
         input: HomeViewModelInput,
+        model: HomeModel = HomeModel(),
         getRepositoriesUseCase: GetRepositoriesUseCase = GetRepositoriesUseCaseImp()
     ) {
         self.input = input
         self.getRepositoriesUseCase = getRepositoriesUseCase
+        self.model = model
+        
+        // Side Effects
+        input.didUpdateSearchText.sink { [weak self] updatedText in
+            guard let self else { return }
+            Task {
+                let output = try! await getRepositoriesUseCase.execute()
+                
+                let items = output.repositories.map {
+                    HomeModel.RepositoryItem(
+                        title: $0.name,
+                        description: $0.description,
+                        starCount: $0.starCount,
+                        language: $0.language
+                    )
+                }
+                
+                self.repositoryItems.send(items)
+            }
+        }.store(in: &cancellables)
+        
+        // View State
+        displayMode.receive(on: DispatchQueue.main).sink {
+            model.displayMode = $0
+        }.store(in: &cancellables)
     }
 }
