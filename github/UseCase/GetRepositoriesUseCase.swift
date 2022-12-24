@@ -5,7 +5,7 @@
 //  Created by Ben Leung on 2022/12/24.
 //
 
-import Foundation
+import Core
 
 protocol GetRepositoriesUseCase {
     func execute() async throws -> GetRepositoriesUseCaseIO.Output
@@ -36,7 +36,7 @@ struct GetRepositoriesUseCaseIO : Codable {
 
 struct GetRepositoriesUseCaseImp: GetRepositoriesUseCase {
     
-    func execute() async -> GetRepositoriesUseCaseIO.Output {
+    func execute() async throws -> GetRepositoriesUseCaseIO.Output {
         // FIXME: API logic to be implemented
 //        let response = GetRepositoriesAPI(query: input.query).perform()
 

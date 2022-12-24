@@ -27,9 +27,9 @@ struct HomeView: View {
                 .multilineTextAlignment(.center)
                 .foregroundColor(.gray)
         case .error:
-            // FIXME: error view
-//            Text("An error has occurred. Please make sure \nyou're connected to the Internet")
-            fatalError("Not implemented yet")
+            Text("An error has occurred. Please make sure \nyou're connected to the Internet")
+                .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
         }
     }
 }

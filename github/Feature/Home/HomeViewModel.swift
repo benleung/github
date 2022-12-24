@@ -38,20 +38,22 @@ final class HomeViewModel: HomeViewModelOutput {
     private let getRepositoriesUseCase: GetRepositoriesUseCase
     
     // results from getRepositoriesUseCase
-    private var repositoryItems = PassthroughSubject<[HomeModel.RepositoryItem], Never>()
+    // if there is error, nil instead
+    private var repositoryItems = PassthroughSubject<[HomeModel.RepositoryItem]?, Never>()
 
     private lazy var displayMode: AnyPublisher<HomeModel.DisplayMode, Never> = {
         Publishers.CombineLatest(
-            input.didUpdateSearchText,
+            input.didUpdateSearchText.map { $0 == nil || $0 == "" },
             repositoryItems
-        ).map { didUpdateSearchText, items in
-            if didUpdateSearchText == nil || didUpdateSearchText == "" {
+        ).map { isNoInput, items in
+            if isNoInput {
                 return .emptyInput
-            } else if items.isEmpty {
-                return .emptyResult
-            } else {
-                return .repositoryList(items)
             }
+            guard let items else {
+                return .error
+            }
+            
+            return items.isEmpty ? .emptyResult : .repositoryList(items)
         }.eraseToAnyPublisher()
     }()
     
@@ -68,9 +70,9 @@ final class HomeViewModel: HomeViewModelOutput {
         input.didUpdateSearchText.sink { [weak self] updatedText in
             guard let self else { return }
             Task {
-                let output = try! await getRepositoriesUseCase.execute()
+                let output = try? await getRepositoriesUseCase.execute()
                 
-                let items = output.repositories.map {
+                let items = output?.repositories.map {
                     HomeModel.RepositoryItem(
                         title: $0.name,
                         description: $0.description,
