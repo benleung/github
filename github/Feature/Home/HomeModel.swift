@@ -8,7 +8,7 @@
 import UIKit
 
 final class HomeModel: ObservableObject {
-    enum DisplayMode {
+    enum DisplayMode: Equatable {
         /// diplay a list of repositories
         case repositoryList([RepositoryItem])
         /// display a message to prompt user to input an text
