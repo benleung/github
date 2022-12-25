@@ -4,7 +4,7 @@ To provide the overview on how to run the code, and to explain the architecture 
 # Developer's Build environment
 - xcode 14.2, macOS Monterey 12.6.1, Intel Mac
 - Deployment target: iOS 16
-- Testing Device: iPhone12 (iOS 16.2)
+- Testing Device (Simulator): iPhone14 Pro (iOS 16.2)
 - build scheme for the app: `github`
 
 # Architecture
