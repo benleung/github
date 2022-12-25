@@ -7,6 +7,8 @@
 
 import Core
 
+/// this corresponds to github's `Search repositories` api
+/// docs:  https://docs.github.com/en/rest/search?apiVersion=2022-11-28#search-repositories
 struct GetRepositoriesAPI: GithubApiProtocol {
     typealias Response = GetRepositoriesResponse
     private let query: String

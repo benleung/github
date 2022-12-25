@@ -13,7 +13,7 @@ final class HomeModel: ObservableObject {
         case repositoryList([RepositoryItem])
         /// display a message to prompt user to input an text
         case emptyInput
-        /// display a message to prompt user to input an text
+        /// display a message to prompt user that no result is found with user's input
         case emptyResult
         /// display a message to prompt user that an error has occurred so that a list of repositories cannot be displayed correctly
         case error

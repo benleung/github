@@ -7,7 +7,7 @@ public protocol GithubApiProtocol {
     var queryItems: [URLQueryItem] { get }
 }
 
-/// protocol for calling githubApiProtocl api
+/// protocol for calling github's api
 extension GithubApiProtocol {
     private var baseUrl: String { "https://api.github.com/" }
     private var token: String {

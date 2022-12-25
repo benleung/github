@@ -7,6 +7,7 @@
 
 import Core
 
+/// fetch a list of repositories based on input
 protocol GetRepositoriesUseCase {
     func execute(input: GetRepositoriesUseCaseIO.Input) async throws -> GetRepositoriesUseCaseIO.Output
 }
