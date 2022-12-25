@@ -17,9 +17,10 @@ struct RepositoryItemListView: View {
 
     public var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 5) {
+            LazyVStack(spacing: 5) {
                 ForEach(items) { item in
                     RepositoryItemView(item)
+                        .padding(.horizontal, 10)
                 }
             }
         }

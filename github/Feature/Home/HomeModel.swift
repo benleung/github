@@ -23,9 +23,9 @@ final class HomeModel: ObservableObject {
         var id: String { title }
         
         let title: String
-        let description: String
+        let description: String?
         let starCount: Int
-        let language: String
+        let language: String?
     }
     
     @Published var displayMode: DisplayMode

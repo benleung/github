@@ -7,16 +7,36 @@
 
 import Core
 
-// FIXME: API logic to be implemented
 struct GetRepositoriesAPI: GithubApiProtocol {
-    private let query: String
     typealias Response = GetRepositoriesResponse
+    private let query: String
 
-    struct GetRepositoriesResponse {
-        
+    struct GetRepositoriesResponse: Codable {
+        let items: [Item]
     }
     
-    var path: String { "/search/repositories" }
+    struct Item: Codable {
+        let full_name: String
+        let description: String?
+        let stargazers_count: Int
+        let language: String?
+        let forks_count: Int
+        let created_at: Date
+        let updated_at: Date
+        let owner: Owner?
+        let license: License?
+    }
+    
+    struct Owner: Codable {
+        let login: String
+        let avatar_url: String?
+    }
+    
+    struct License: Codable {
+        let name: String
+    }
+    
+    var path: String { "search/repositories" }
     var queryItems: [URLQueryItem] {
         [URLQueryItem(name: "q", value: query)]
     }

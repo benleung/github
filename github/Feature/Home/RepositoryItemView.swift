@@ -17,19 +17,25 @@ struct RepositoryItemView: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(model.title)
-                .font(Font.body.bold())
-            Text(model.description)
-                .fixedSize(horizontal: false, vertical: true)
-                .lineLimit(2)
-                .font(.body)
-            HStack(spacing: 20) {
-                Text(model.language)
-                Label("\(model.starCount)", systemImage: "star")
+            HStack {
+                Text(model.title)
+                    .font(Font.body.bold())
                 Spacer()
             }
-            .foregroundColor(Color.gray)
-            .font(.footnote)
+            if let description = model.description {
+                Text(description)
+                    .lineLimit(2)
+                    .font(.body)
+            }
+            if let language = model.language {
+                HStack(spacing: 20) {
+                    Text(language)
+                    Label("\(model.starCount)", systemImage: "star")
+                    Spacer()
+                }
+                .foregroundColor(Color.gray)
+                .font(.footnote)
+            }
         }
         .padding(10)
         .background(Color.white)

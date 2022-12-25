@@ -27,17 +27,6 @@ final class HomeViewController: UIViewController {
             input: input
         )
     }()
-    
-    private var errorView: UIView = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "An error has occurred. Please make sure \nyou're connected to the Internet."
-        view.textColor = .darkGray
-        view.numberOfLines = 2
-        view.textAlignment = .center
-        view.layoutMargins = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 50)
-        return view
-    }()
 
     private var cancellables = Set<AnyCancellable>()
 

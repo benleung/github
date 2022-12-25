@@ -67,10 +67,11 @@ final class HomeViewModel: HomeViewModelOutput {
         self.model = model
         
         // Side Effects
-        input.didUpdateSearchText.sink { [weak self] updatedText in
+        input.didUpdateSearchText.debounce(for: 0.5, scheduler: DispatchQueue.main).compactMap { $0 != "" ? $0 : nil }.sink { [weak self] updatedText in
             guard let self else { return }
             Task {
-                let output = try? await getRepositoriesUseCase.execute()
+                let input = GetRepositoriesUseCaseIO.Input(query: updatedText)
+                let output = try? await getRepositoriesUseCase.execute(input: input)
                 
                 let items = output?.repositories.map {
                     HomeModel.RepositoryItem(
