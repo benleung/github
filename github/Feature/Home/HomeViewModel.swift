@@ -12,7 +12,6 @@ import UIKit
 /// Input from ViewController to ViewModel
 struct HomeViewModelInput {
     var didUpdateSearchText = PassthroughSubject<String?, Never>()
-    var didViewLoad = PassthroughSubject<Void, Never>()
     var didTapRepositoryItem = PassthroughSubject<HomeModel.RepositoryItem, Never>()
 }
 

@@ -94,6 +94,25 @@ final class HomeViewModelTests: XCTestCase {
         }
         wait(for: [waitAfterDidUpdateSearchText], timeout: 5.0)
     }
+    
+    func test_didTapRepositoryItem() throws {
+        // Arrange
+        let input = HomeViewModelInput()
+        let output: HomeViewModelOutput = HomeViewModel(input: input, getRepositoriesUseCase: GetRepositoriesUseCaseWithNoResultMock())
+        let itemToTap = HomeModel.RepositoryItem(title: "benleung/github1", description: "A repository that simulate how github app works. This repository is written in swift. This is an ios app. This is written with mostly UIKit and some SwiftUI", starCount: 5, language: "swift", forkCount: 0, createdAt: Date.distantFuture, updatedAt: Date.distantFuture, ownerName: "benleung", ownerAvator: nil)
+        
+        let transitToRepositoryDetailView = TestableSubscriber<HomeModel.RepositoryItem, Never>()
+        output.transitToRepositoryDetailView.receive(subscriber: transitToRepositoryDetailView)
+
+        // Act
+        input.didTapRepositoryItem.send(itemToTap)
+        
+        // Assert
+        XCTAssertEqual(transitToRepositoryDetailView.successCallCount, 1,
+                                   "when a repository item is tapped, a detail view is displayed")
+        XCTAssertEqual(transitToRepositoryDetailView.value, itemToTap,
+                                   "when a repository item is tapped, a detail view is displayed")
+    }
 }
 
 private struct GetRepositoriesUseCaseMock: GetRepositoriesUseCase {
