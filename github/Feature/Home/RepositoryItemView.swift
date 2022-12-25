@@ -57,7 +57,12 @@ struct RepositoryItemView_Previews: PreviewProvider {
                 title: "benleung/github1",
                 description: "A repository that simulate how github app works. This repository is written in swift. This is an ios app. This is written with mostly UIKit and some SwiftUI",
                 starCount: 12,
-                language: "Swift"
+                language: "Swift",
+                forkCount: 0,
+                createdAt: Date(),
+                updatedAt: Date(),
+                ownerName: "benleung",
+                ownerAvator: nil
             )
         )
     }

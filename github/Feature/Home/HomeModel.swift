@@ -26,6 +26,12 @@ final class HomeModel: ObservableObject {
         let description: String?
         let starCount: Int
         let language: String?
+        
+        let forkCount: Int
+        let createdAt: Date
+        let updatedAt: Date
+        let ownerName: String?
+        let ownerAvator: String?
     }
     
     @Published var displayMode: DisplayMode

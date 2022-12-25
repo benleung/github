@@ -13,15 +13,13 @@ import UIKit
 struct HomeViewModelInput {
     var didUpdateSearchText = PassthroughSubject<String?, Never>()
     var didViewLoad = PassthroughSubject<Void, Never>()
-    // TODO: handle tap event
-//    var didTapRepositoryItem = PassthroughSubject<Void, Never>()
+    var didTapRepositoryItem = PassthroughSubject<HomeModel.RepositoryItem, Never>()
 }
 
 /// Data for UI's updates
 /// Output from ViewModel to ViewController
 protocol HomeViewModelOutput {
-    // TODO: handle tap event
-//    var transitToRepositoryDetailView: AnyPublisher<Void, Never> { get }
+    var transitToRepositoryDetailView: AnyPublisher<HomeModel.RepositoryItem, Never> { get }
     var model: HomeModel { get }
 }
 
@@ -29,7 +27,11 @@ final class HomeViewModel: HomeViewModelOutput {
     // MARK: output
     
     var model: HomeModel
-    
+
+    var transitToRepositoryDetailView: AnyPublisher<HomeModel.RepositoryItem, Never> {
+        input.didTapRepositoryItem.eraseToAnyPublisher()
+    }
+
     // MARK: private properties
 
     private let input: HomeViewModelInput
@@ -78,7 +80,13 @@ final class HomeViewModel: HomeViewModelOutput {
                         title: $0.name,
                         description: $0.description,
                         starCount: $0.starCount,
-                        language: $0.language
+                        language: $0.language,
+                        
+                        forkCount: $0.forkCount,
+                        createdAt: $0.createdAt,
+                        updatedAt: $0.updatedAt,
+                        ownerName: $0.ownerName,
+                        ownerAvator: $0.ownerAvator
                     )
                 }
                 

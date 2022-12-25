@@ -10,14 +10,17 @@ import SwiftUI
 struct HomeView: View {
     @ObservedObject var model: HomeModel
     
+    let input: HomeViewModelInput
+    
     init(model: HomeModel, input: HomeViewModelInput) {
         self.model = model
+        self.input = input
     }
     
     var body: some View {
         switch model.displayMode {
         case .repositoryList(let items):
-            RepositoryItemListView(items)
+            RepositoryItemListView(items, input: input)
         case .emptyInput:
             Text("Please enter keywords to\nto query for a list of repositories")
                 .multilineTextAlignment(.center)

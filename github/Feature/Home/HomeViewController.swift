@@ -71,6 +71,10 @@ final class HomeViewController: UIViewController {
 
     private func binding() {
         // MARK: Output Binding
+        output.transitToRepositoryDetailView.sink {
+            // FIXME: implement RepositoryDetailView
+            print($0)
+        }.store(in: &cancellables)
     }
 }
 

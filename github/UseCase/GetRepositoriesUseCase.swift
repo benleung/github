@@ -26,8 +26,8 @@ struct GetRepositoriesUseCaseIO : Codable {
             let language: String?
             
             let forkCount: Int
-            let created_at: Date
-            let updated_at: Date
+            let createdAt: Date
+            let updatedAt: Date
             let ownerName: String?
             let ownerAvator: String?
         }
@@ -48,8 +48,8 @@ struct GetRepositoriesUseCaseImp: GetRepositoriesUseCase {
                     starCount: $0.stargazers_count,
                     language: $0.language,
                     forkCount: $0.forks_count,
-                    created_at: Date(),
-                    updated_at: Date(),
+                    createdAt: $0.created_at,
+                    updatedAt: $0.updated_at,
                     ownerName: $0.owner?.login,
                     ownerAvator: $0.owner?.avatar_url
                 )
