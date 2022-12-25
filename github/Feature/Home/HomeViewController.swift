@@ -71,9 +71,12 @@ final class HomeViewController: UIViewController {
 
     private func binding() {
         // MARK: Output Binding
-        output.transitToRepositoryDetailView.sink {
-            // FIXME: implement RepositoryDetailView
-            print($0)
+        output.transitToRepositoryDetailView.sink { [weak self] repositoryItem in
+            guard let self = self else { return }
+
+            let repositoryDetailView = RepositoryDetailView(repositoryItem)
+            let vc = UIHostingController(rootView: repositoryDetailView)
+            self.present(vc, animated: true)
         }.store(in: &cancellables)
     }
 }

@@ -179,7 +179,6 @@
 		B5778C8D2956055300440DD0 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
-				B5778C9F29560F8B00440DD0 /* RepositoryDetail */,
 				B5778C9E29560F7E00440DD0 /* Home */,
 			);
 			path = Feature;
@@ -226,6 +225,7 @@
 				B5778CB22956B11E00440DD0 /* HomeView.swift */,
 				B5778CB02956AB4300440DD0 /* RepositoryItemListView.swift */,
 				B5778CA629561D1600440DD0 /* RepositoryItemView.swift */,
+				B5778C9F29560F8B00440DD0 /* RepositoryDetail */,
 			);
 			path = Home;
 			sourceTree = "<group>";
