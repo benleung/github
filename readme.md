@@ -1,6 +1,10 @@
 # Purpose of this document
 To provide the overview on how to run the code, and to explain the architecture with the motivation behind, such the readers could understand
 
+# How to install
+1. [Update your own github token here](https://github.com/benleung/github/blob/main/Core/API/GithubApiProtocol.swift)
+2. build and run with scheme of `github`
+
 # Developer's Build environment
 - xcode 14.2, macOS Monterey 12.6.1, Intel Mac
 - Deployment target: iOS 16
