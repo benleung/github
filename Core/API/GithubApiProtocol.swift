@@ -12,7 +12,7 @@ extension GithubApiProtocol {
     private var baseUrl: String { "https://api.github.com/" }
     private var token: String {
         // TODO: better keep this value to a seperate secret file
-        "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"
+        "" // change to your own token
     }
 
     public func perform() async throws -> Response {
